@@ -13,22 +13,22 @@ do
   then
         cd $curRepo
         if [ "$repoName" == "codex-processes-ap2" ]
+          # add startup 
         then
           echo "codex-processes-ap2"
         elif [ "$repoName" == "codex-aktin-broker" ]
         then
           cd aktin-broker
-          docker-compose -p $COMPOSE_PROJECT stop
+          docker-compose -p $COMPOSE_PROJECT down
           sleep 10
           cd ../aktin-client
-          docker-compose -p $COMPOSE_PROJECT stop
+          docker-compose -p $COMPOSE_PROJECT down
         elif [ "$repoName" == "num-knoten" ]
         then
           cd fhir-server/blaze-server
-          docker-compose -p $COMPOSE_PROJECT stop
+          docker-compose -p $COMPOSE_PROJECT down
         else
-          echo "docker up $curRepo"
-          docker-compose -p $COMPOSE_PROJECT stop
+          docker-compose -p $COMPOSE_PROJECT down
         fi
   fi
 done

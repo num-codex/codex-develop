@@ -1,7 +1,13 @@
+codex-aktin-broker
+codex-sq2cql
 codex-keycloak
 codex-processes-ap2
 codex-feasibility-gui
 codex-feasibility-backend
+codex-flare
 flare-fhir
 broker
 num-knoten
+ontology
+.idea
+.vscode

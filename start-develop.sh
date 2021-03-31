@@ -2,14 +2,33 @@
 
 export COMPOSE_PROJECT=codex-develop
 
-cd codex-keycloak
-docker-compose -p $COMPOSE_PROJECT up -d
+CODEX_REPOS=${CODEX_REPOS:-"codex-keycloak,codex-feasibility-gui,codex-feasibility-backend,codex-flare"}
+baseDir=$(pwd)
 
-cd ../codex-feasibility-gui
-docker-compose -p $COMPOSE_PROJECT up -d
 
-cd ../codex-feasibility-backend
-docker-compose -p $COMPOSE_PROJECT up -d
-
-cd ../num-knoten/fhir-server/blaze-server
-docker-compose -p $COMPOSE_PROJECT up -d
+for repoName in ${CODEX_REPOS//,/ }
+do
+  curRepo="$baseDir/$repoName"
+  if [ -d "$curRepo" ]
+  then
+        cd $curRepo
+        if [ "$repoName" == "codex-processes-ap2" ]
+        then
+          echo "codex-processes-ap2"
+        elif [ "$repoName" == "codex-aktin-broker" ]
+        then
+          cd aktin-broker
+          docker-compose -p $COMPOSE_PROJECT up -d
+          sleep 10
+          cd ../aktin-client
+          docker-compose -p $COMPOSE_PROJECT up -d
+        elif [ "$repoName" == "num-knoten" ]
+        then
+          cd fhir-server/blaze-server
+          docker-compose -p $COMPOSE_PROJECT up -d
+        else
+          echo "docker up $curRepo"
+          docker-compose -p $COMPOSE_PROJECT up -d
+        fi
+  fi
+done

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 gitBase="https://github.com/num-codex/"
-repos=("codex-feasibility-gui" "codex-feasibility-backend" "codex-keycloak" "codex-processes-ap2" "num-knoten")
+repos=("codex-feasibility-gui" "codex-feasibility-backend" "codex-keycloak" "codex-processes-ap2" "codex-aktin-broker" "codex-sq2cql" "num-knoten" "broker" "codex-flare")
 baseDir=$(pwd)
 
 echo "****updating base repo Develop****"
@@ -23,43 +23,43 @@ do
   fi
 done
 
-gitBase="https://github.com/rwth-imi/"
-repos=("flare-fhir")
-baseDir=$(pwd)
+#gitBase="https://github.com/rwth-imi/"
+#repos=("flare-fhir")
+#baseDir=$(pwd)
+#
+#for repoName in ${repos[@]}
+#do
+#  curRepo="$baseDir/$repoName"
+#  if [ ! -d "$curRepo" ]
+#  then
+#        cd $baseDir
+#        echo "****initialising git repo $repoName****"
+#        git clone "$gitBase$repoName.git"
+#  else
+#        cd $repoName
+#        echo "****updating git repo $repoName****"
+#        git pull
+#        cd ..
+#  fi
+#done
 
-for repoName in ${repos[@]}
-do
-  curRepo="$baseDir/$repoName"
-  if [ ! -d "$curRepo" ]
-  then
-        cd $baseDir
-        echo "****initialising git repo $repoName****"
-        git clone "$gitBase$repoName.git"
-  else
-        cd $repoName
-        echo "****updating git repo $repoName****"
-        git pull
-        cd ..
-  fi
-done
-
-gitBase="https://github.com/aktin/"
-repos=("broker")
-baseDir=$(pwd)
-
-for repoName in ${repos[@]}
-do
-  curRepo="$baseDir/$repoName"
-  if [ ! -d "$curRepo" ]
-  then
-        cd $baseDir
-        echo "****initialising git repo $repoName****"
-        git clone "$gitBase$repoName.git"
-  else
-        cd $repoName
-        echo "****updating git repo $repoName****"
-        git pull
-        cd ..
-  fi
-done
+#gitBase="https://github.com/aktin/"
+#repos=("broker")
+#baseDir=$(pwd)
+#
+#for repoName in ${repos[@]}
+#do
+#  curRepo="$baseDir/$repoName"
+#  if [ ! -d "$curRepo" ]
+#  then
+#        cd $baseDir
+#        echo "****initialising git repo $repoName****"
+#        git clone "$gitBase$repoName.git"
+#  else
+#        cd $repoName
+#        echo "****updating git repo $repoName****"
+#        git pull
+#        cd ..
+#  fi
+#done
 
