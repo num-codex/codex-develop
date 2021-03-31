@@ -24,3 +24,4 @@ In the standard setup, the develop script will start: codex-keycloak,codex-feasi
 
 If you would like to start a different combination of components set the environment variable `CODEX_REPOS` accordingly.
 The variable `CODEX_REPOS` variable accepts a comma separated list of components repository names you would like to start locally.
+

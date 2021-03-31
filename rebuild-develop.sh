@@ -2,11 +2,11 @@
 
 export COMPOSE_PROJECT=codex-develop
 
-repos=("codex-keycloak" "codex-feasibility-gui" "codex-feasibility-backend" "codex-flare")
+CODEX_REPOS=${CODEX_REPOS:-"codex-keycloak,codex-feasibility-gui,codex-feasibility-backend,codex-flare"}
 baseDir=$(pwd)
 
 
-for repoName in ${repos[@]}
+for repoName in ${CODEX_REPOS//,/ }
 do
   curRepo="$baseDir/$repoName"
   if [ -d "$curRepo" ]
