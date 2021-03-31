@@ -16,24 +16,11 @@ to make them available to components not started inside a docker container.
 
 
 
-
 ## Example setup for project
 
+To start an example setup with docker containers use the `start-develop.sh` script, which allows you to start the respective docker containers for the components you would like to set up locally.
 
-```bash
-export COMPOSE_PROJECT=codex-develop
+In the standard setup, the develop script will start: codex-keycloak,codex-feasibility-gui,codex-feasibility-backend,codex-flare
 
-cd codex-keycloak
-docker-compose -p $COMPOSE_PROJECT up -d
-
-cd ../codex-feasibility-backend
-docker-compose -p $COMPOSE_PROJECT up -d
-
-cd ../codex-flare
-docker-compose -p $COMPOSE_PROJECT up -d
-
-cd ../num-knoten/fhir-server/blaze-server
-docker-compose -p $COMPOSE_PROJECT up -d
-
-
-```
+If you would like to start a different combination of components set the environment variable `CODEX_REPOS` accordingly.
+The variable `CODEX_REPOS` variable accepts a comma separated list of components repository names you would like to start locally.
