@@ -12,9 +12,10 @@ do
   if [ -d "$curRepo" ]
   then
         cd $curRepo
-        if [ "$repoName" == "codex-processes-ap2" ]
+        if [ "$repoName" == "codex-dsf-broker" ]
         then
-          echo "codex-processes-ap2"
+          ./zars/stop.sh $COMPOSE_PROJECT
+          ./dic/stop.sh $COMPOSE_PROJECT
         elif [ "$repoName" == "codex-aktin-broker" ]
         then
           cd aktin-broker

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 gitBase="https://github.com/num-codex/"
-repos=("codex-feasibility-gui" "codex-feasibility-backend" "codex-keycloak" "codex-processes-ap2" "codex-aktin-broker" "codex-sq2cql" "num-knoten" "broker" "codex-flare")
+repos=("codex-feasibility-gui" "codex-feasibility-backend" "codex-keycloak" "codex-aktin-broker" "codex-sq2cql" "num-knoten" "broker" "codex-flare")
 baseDir=$(pwd)
 
 echo "****updating base repo Develop****"
