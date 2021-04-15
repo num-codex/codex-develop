@@ -2,7 +2,13 @@
 
 gitBase="https://github.com/num-codex/"
 repos=("codex-feasibility-gui" "codex-feasibility-backend" "codex-keycloak" "codex-processes-ap2" "codex-aktin-broker" "codex-sq2cql" "num-knoten" "broker" "codex-flare")
-baseDir=$(pwd)
+
+readlink "$0" > /dev/null
+if [ $? -ne 0 ]; then
+  baseDir=$(dirname "$0")
+else
+  baseDir=$(dirname "$(readlink "$0")")
+fi
 
 echo "****updating base repo Develop****"
 git pull

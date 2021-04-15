@@ -3,7 +3,13 @@
 export COMPOSE_PROJECT=codex-develop
 
 CODEX_REPOS=${CODEX_REPOS:-"codex-keycloak,codex-feasibility-gui,codex-feasibility-backend,codex-flare"}
-baseDir=$(pwd)
+
+readlink "$0" > /dev/null
+if [ $? -ne 0 ]; then
+  baseDir=$(dirname "$0")
+else
+  baseDir=$(dirname "$(readlink "$0")")
+fi
 
 
 for repoName in ${CODEX_REPOS//,/ }
