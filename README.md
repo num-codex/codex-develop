@@ -2,7 +2,14 @@
 
 This repository allows a developer to start a development environment, which contains all elements off the CODEX AP1.7, AP2.2 and AP2.3
 
-![Num-Codex AP1.7,AP2.2, AP2.3 Overview](img/codex-ap2-overview.png)
+## Codex Feasibility Query Overview
+
+The Figure 1 below provides an overview of the whole system neccessary to create a feasibility query at a central location, execute the query dezentralised accross multiple sites and recieve confuscated feasibility responses.
+
+<figure class="image">
+  <img src="img/codex-ap2-overview.png">
+  <figcaption>Figure 1 - Overview Codex AP2 - Feasibility Queries</figcaption>
+</figure>
 
 ## How to use
 

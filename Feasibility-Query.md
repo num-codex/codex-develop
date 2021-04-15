@@ -1,25 +1,26 @@
 # Feasibility Query Translation
 
+One aim of the codex project is to create a user interface for feasibility queries, which works directly with the FHIR standard.
 
-
-![Num-Codex AP1.7,AP2.2, AP2.3 Overview](img/codex-ap2-overview.png)
-
-
-
-![Num-Codex AP1.7,AP2.2, AP2.3 Feasibility Query Translation](img/codex-ap2-query-translation.png)
-
-
-
-The aim of the codex project is to create a user interface for feasibility queries, which works directly with the FHIR standard.
+This description focusses on the query translation itself, for an overview of the whole project please refer to <https://github.com/num-codex/codex-develop/blob/main/README.md>
 
 To achieve this the user input from the user interface has to be translated into queries, which can be executed on a FHIR server.
 
+An overview of the components involved in this process is depicted in Figure 1 below.
+
+![Overview of Query Translation Process](img/codex-ap2-query-translation.png)
+
+Figure 1 - Overview of Query Translation Process
+
 In this project we call the query, which is created by the user interface a "StructuredQuery", which contains all the logic and input neccessary to translate the query into two common ways to search on a FHIR Server: FHIR Search and CQL.
+
+The Structured Query is defined here:
+[Codex Structured Query Definition](https://github.com/num-codex/codex-structured-query/blob/main/structured-query/documentation/2021_01_29StructeredQueriesDocumentation(Draft).md)
 
 For FHIR Search, the query needs to be translated into multiple queries and the combination logic applied to the results, as the specification of FHIR Search is limited.
 The FHIR Search translator is part of the Flare project and can be found here: <https://github.com/num-codex/codex-flare>
 
-For CQL, the query can be translated into one CQL String which can be send and executed on a CQL ready FHIR Server directly.
+For CQL, the query can be translated into one CQL String which can be send to and executed on a CQL ready FHIR Server directly.
 The CQL query translator can be found here: <https://github.com/num-codex/codex-sq2cql>
 
 To achieve the translation from a general user interface format to FHIR format and to display the single Search Criterions for the user we need the following files:
@@ -32,6 +33,10 @@ To achieve the translation from a general user interface format to FHIR format a
 
 This file contains the ontology and therefore all criteria available to the user in the user interface.
 It determines the order of display, the "categorisation" of the criteria and tells the user interface how to treat each criterion.
+
+This ontology tree is split accross mulitple files, each responsible for Category, such as "Demographics". The ontology is always provided by the UI-Backend terminology service endpoint. The backend provides the option to load terminology based on categories or search through the terminology via a freetext search.
+
+A JSON schema of the ui ontology tree can be found here: <https://github.com/num-codex/codex-gecco-to-ui-profiles/blob/main/schema/ui-profile-schema.json>
 
 <details>
 <summary> UI Ontology Tree - Example Excerpt </summary>
@@ -87,6 +92,7 @@ This file contains a code tree, which allows the query translators to resolve (f
 
 Following the children element of the code tree would for example resolve I09 (<https://www.icd-code.de/suche/icd/code/I09.-.html?sp=SI09>) to I09,I09.0,I09.1,I09.2,I09.8,I09.9
 
+A JSON schema of the Codex Code Tree can be found here: <https://github.com/num-codex/codex-gecco-to-ui-profiles/blob/main/schema/codex-code-tree-schema.json>
 
 <details>
 <summary> Codex Code Tree - Example Excerpt </summary>
@@ -148,9 +154,9 @@ Following the children element of the code tree would for example resolve I09 (<
 
 ### Term Code Mapping (FHIR)
 
-This file contains the mappings from the codex criteria to FHIR resources. It is used by the query translators in combination with the StructuredQuery input to convert each criterion into a search string
+This file contains the mappings from the codex criteria to FHIR resources. It is used by the query translators in combination with the StructuredQuery input to convert each criterion into a search string.
 Each criterion is identified using the "code" and "system" attributes of the "key" attribute of each json criterion mapping object.
-Each object then contains the following elements:
+Each object contains the following elements:
 
 | Element     | Description                      | Example Value |
 |-------------|----------------------------------|-------------- |
@@ -158,6 +164,8 @@ Each object then contains the following elements:
 | fixedCriteria | Contains the definition of search parameters that always need to be set during a search | - |
 | termCodeSearchParameter | Contains the search parameter which to use in order to find a criterion by its vocabulary code and system | code |
 | valueSearchParameter | Contains the search parameter which to use in order to apply the allowed value filter of a criterion | value-quantity |
+
+A JSON schema of the Codex Code Tree can be found here: <https://github.com/num-codex/codex-gecco-to-ui-profiles/blob/main/schema/term-code-mapping-schema.json>
 
 
 <details>
@@ -209,49 +217,6 @@ Each object then contains the following elements:
 </details>
 
 <br/>
-
-## Feasibility query - Definition of queries
-
-The Structured Query is defined here:
-[Codex Structured Query Definition](https://github.com/num-codex/codex-structured-query/blob/main/structured-query/documentation/2021_01_29StructeredQueriesDocumentation(Draft).md)
-
-The Structured Query is created in the user interface, which uses the ui-ontology-tree.
-This ontology tree is split accross mulitple files, each responsible for Category, such as "Demographics". The ontology is always provided by the UI-Backend terminology service endpoint. The backend provides the option to load terminology based on categories or search through the terminology via a freetext search.
-
-The entries in the ontology trees are always structured as follows:
-
-<details>
-<summary> UI Ontology Tree Example Entry</summary>
-
-```json
-{
-  "children": [],
-  "display": "CRP",
-  "id": "0feaabac-d523-4287-a10a-a6f4b332cabb",
-  "leaf": true,
-  "selectable": true,
-  "termCode": {
-    "code": "48421-2",
-    "display": "C reactive protein [Mass/volume] in Capillary blood",
-    "system": "http://loinc.org"
-  },
-  "timeRestrictionAllowed": false,
-  "valueDefinitions": [
-    {
-      "allowedUnits": [
-        {
-          "code": "mg/dL",
-          "display": "mg/dL"
-        }
-      ],
-      "precision": 1,
-      "selectableConcepts": [],
-      "type": "quantity"
-    }
-  ]
-}
-```
-</details>
 
 ## Simple example feasibility query
 
@@ -403,8 +368,6 @@ define Inclusion:
     where O.value as Quantity > 20.0 'kg' and
   (exists from [Condition: Code 'A16.2' from icd10] C
     where C.verificationStatus.coding contains Code 'confirmed' from cvs or
-  exists from [Condition: Code 'A16.2' from icd10] C
-    where C.verificationStatus.coding contains Code 'confirmed' from cvs or
   exists from [Condition: Code 'J61' from icd10] C
     where C.verificationStatus.coding contains Code 'confirmed' from cvs)
 
@@ -440,3 +403,4 @@ define InInitialPopulation:
 ]
 ```
 </details>
+
