@@ -2,8 +2,14 @@
 
 export COMPOSE_PROJECT=codex-develop
 
-baseDir=$(pwd)
 CODEX_REPOS=${CODEX_REPOS:-"codex-keycloak,codex-feasibility-gui,codex-feasibility-backend,codex-flare"}
+
+readlink "$0" > /dev/null
+if [ $? -ne 0 ]; then
+  baseDir=$(dirname "$0")
+else
+  baseDir=$(dirname "$(readlink "$0")")
+fi
 
 export CODEX_CONCEPT_TREE_PATH=${CODEX_CONCEPT_TREE_PATH:-"$baseDir/ontology/codex-code-tree.json"}
 export CODEX_TERM_CODE_MAPPING_PATH=${CODEX_TERM_CODE_MAPPING_PATH:-"$baseDir/ontology/term-code-mapping.json"}
