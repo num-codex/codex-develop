@@ -22,6 +22,20 @@ To ensure that this is the case, start the respective components in their docker
 to make them available to components not started inside a docker container.
 
 
+## Initialise the project
+
+The project in develop mode requires one to set up the development environments for some of the components or at least build the packages from the source code. In some cases the source code does not need to be compiled (e.g. flare (python project)).
+
+1. codex-feasibility-backend
+
+Follow the instructions of the codex-feasibility-backend [README](codex-feasibility-backend/README.md) > Setting up Development - Steps 1 and 2
+Note: Requires Java 15 and maven
+
+2. codex-sq2cql
+
+The codex-sq2cql library is used by the codex-feasibility-backend to translate the structured query to cql.
+You can change the codex-sq2cql version used in the backend either by changing the dependency in the backend pom to one of the realeases here https://github.com/num-codex/codex-sq2cql/packages or by building it locally and adding the dependency manually to the backend.
+
 
 ## Example setup for project
 

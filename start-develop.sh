@@ -6,7 +6,12 @@ baseDir=$(pwd)
 CODEX_REPOS=${CODEX_REPOS:-"codex-keycloak,codex-feasibility-gui,codex-feasibility-backend,codex-flare"}
 
 export CODEX_CONCEPT_TREE_PATH=${CODEX_CONCEPT_TREE_PATH:-"$baseDir/ontology/codex-code-tree.json"}
-export CODEX_TERM_CODE_MAPPING_PATH=${CODEX_TERM_CODE_MAPPING_PATH:-"$baseDir/ontology/term-code-mapping.json"}
+export CODEX_TERM_CODE_MAPPING_PATH=${CODEX_TERM_CODE_MAPPING_PATH:-"$baseDir/ontology/codex-term-code-mapping.json"}
+
+cp -R codex-gecco-to-ui-profiles/ui-profiles ontology
+cp codex-gecco-to-ui-profiles/mapping/TermCodeMapping.json ontology/codex-term-code-mapping.json
+cp codex-gecco-to-ui-profiles/mapping/TermCodeTree.json ontology/codex-code-tree.json
+
 
 for repoName in ${CODEX_REPOS//,/ }
 do
