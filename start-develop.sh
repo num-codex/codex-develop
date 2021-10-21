@@ -3,7 +3,8 @@
 export COMPOSE_PROJECT=codex-develop
 
 baseDir=$(pwd)
-CODEX_REPOS=${CODEX_REPOS:-"codex-keycloak,codex-feasibility-gui,codex-feasibility-backend,codex-flare, codex-aktin-broker"}
+# CODEX_REPOS=${CODEX_REPOS:-"codex-keycloak,codex-feasibility-gui,codex-feasibility-backend,codex-flare, codex-aktin-broker"}
+CODEX_REPOS=${CODEX_REPOS:-"codex-feasibility-backend,codex-flare, codex-aktin-broker"}
 
 export FLARE_DEBUG=--debug
 export CODEX_CONCEPT_TREE_PATH=${CODEX_CONCEPT_TREE_PATH:-"$baseDir/ontology/codex-code-tree.json"}
@@ -20,6 +21,7 @@ do
   if [ -d "$curRepo" ]
   then
         cd $curRepo
+        echo "docker up $curRepo"
         if [ "$repoName" == "codex-processes-ap2" ]
         then
           echo "codex-processes-ap2"
